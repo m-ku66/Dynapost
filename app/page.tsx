@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AppContextProvider } from "./context/AppContext";
 import Separator from "./components/Separator";
-
 export default function Home() {
   const h1Ref = useRef<HTMLHeadingElement>(null); // reference to remember header width between renders
   const pRef = useRef<HTMLParagraphElement>(null); // reference to remember paragraph width between renders
@@ -51,7 +50,7 @@ export default function Home() {
             <Separator height={0.05} />
           </div>
           <div className="w-full h-full border border-1 border-black">
-            this will be the container component
+            container component
           </div>
         </div>
       </div>

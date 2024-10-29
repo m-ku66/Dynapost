@@ -1,9 +1,15 @@
 "use client";
 import React, { createContext, useState, ReactNode } from "react";
+
+type appStateObject = {
+  physicsState: string;
+  objectShape: "orb" | "cross" | "box";
+};
+
 // define types for the constext
 interface AppContextType {
-  state: object;
-  setState: React.Dispatch<React.SetStateAction<object>>;
+  state: appStateObject;
+  setState: React.Dispatch<React.SetStateAction<appStateObject>>;
 }
 
 // create the context
@@ -16,7 +22,7 @@ interface AppContextProviderProps {
 
 // create the provider
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  const [appstate, setAppState] = useState<object>({
+  const [appstate, setAppState] = useState<appStateObject>({
     physicsState: "float",
     objectShape: "orb",
   });
