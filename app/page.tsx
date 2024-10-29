@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <AppContextProvider>
       <div className="container max-w-full h-screen flex justify-center items-center p-8">
-        <div className="w-full md:w-[500px] h-full border border-1 border-black flex flex-col px-8 py-4">
+        <div className="w-full md:w-[500px] h-full border border-1 border-black flex flex-col px-8 pt-4 pb-8">
           <div className="flex flex-col select-none">
             <h1 ref={h1Ref} className="text-[4rem] font-black text-center">
               DYNAPOST
@@ -49,8 +49,10 @@ export default function Home() {
             <div className="flex justify-between w-full h-16 bg-stone-300"></div>
             <Separator height={0.05} />
           </div>
-          <div className="w-full h-full border border-1 border-black">
-            container component
+          <div className="flex justify-center items-center w-full h-fit border border-1 border-black/[0.2]">
+            <div className="bg-black" style={{ width: 450, height: 430 }}>
+              <p className="text-white">Example container component</p>
+            </div>
           </div>
         </div>
       </div>
