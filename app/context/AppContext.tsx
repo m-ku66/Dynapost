@@ -2,7 +2,7 @@
 import React, { createContext, useState, ReactNode } from "react";
 
 type appStateObject = {
-  physicsState: string;
+  physicsState: "float" | "bounce" | "cycle";
   objectShape: "orb" | "cross" | "box";
 };
 
@@ -24,7 +24,7 @@ interface AppContextProviderProps {
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const [appstate, setAppState] = useState<appStateObject>({
     physicsState: "float",
-    objectShape: "orb",
+    objectShape: "cross",
   });
 
   return (

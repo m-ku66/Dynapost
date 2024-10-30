@@ -2,10 +2,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AppContextProvider } from "./context/AppContext";
 import Separator from "./components/Separator";
+import Container from "./components/animation_components/Container";
+
 export default function Home() {
-  const h1Ref = useRef<HTMLHeadingElement>(null); // reference to remember header width between renders
-  const pRef = useRef<HTMLParagraphElement>(null); // reference to remember paragraph width between renders
-  const [letterSpacing, setLetterSpacing] = useState(0); // spacing between letters
+  const h1Ref = useRef<HTMLHeadingElement>(null);
+  const pRef = useRef<HTMLParagraphElement>(null);
+  const parentRef = useRef<HTMLDivElement>(null); // Ref for the parent div
+  const [letterSpacing, setLetterSpacing] = useState(0);
+  const [containerDimensions, setContainerDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
 
   useEffect(() => {
     const adjustLetterSpacing = () => {
@@ -20,12 +27,29 @@ export default function Home() {
       }
     };
 
-    // Initial calculation
-    adjustLetterSpacing();
+    // Calculate container dimensions
+    const adjustContainerDimensions = () => {
+      if (parentRef.current) {
+        setContainerDimensions({
+          width: parentRef.current.clientWidth,
+          height: parentRef.current.clientHeight,
+        });
+      }
+    };
 
-    // Adjust on window resize for responsiveness
-    window.addEventListener("resize", adjustLetterSpacing);
-    return () => window.removeEventListener("resize", adjustLetterSpacing);
+    // Initial calculations
+    adjustLetterSpacing();
+    adjustContainerDimensions();
+
+    // Adjust on window resize
+    window.addEventListener("resize", () => {
+      adjustLetterSpacing();
+      adjustContainerDimensions();
+    });
+    return () => {
+      window.removeEventListener("resize", adjustLetterSpacing);
+      window.removeEventListener("resize", adjustContainerDimensions);
+    };
   }, []);
 
   return (
@@ -49,10 +73,16 @@ export default function Home() {
             <div className="flex justify-between w-full h-16 bg-stone-300"></div>
             <Separator height={0.05} />
           </div>
-          <div className="flex justify-center items-center w-full h-fit border border-1 border-black/[0.2]">
-            <div className="bg-black" style={{ width: 450, height: 430 }}>
-              <p className="text-white">Example container component</p>
-            </div>
+          <div
+            ref={parentRef}
+            className="flex justify-center items-center w-full h-[80%] border border-1 border-black/[0.2]"
+          >
+            <Container
+              width={containerDimensions.width}
+              height={containerDimensions.height}
+              objectCount={200}
+              maxSize={10}
+            />
           </div>
         </div>
       </div>
