@@ -31,6 +31,7 @@ const Container = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const { physicsState } = useAppContext().state;
+  const { state, setState } = useAppContext();
   const gravity = 0.5;
   const repulsionRadius = 100; // radius
   const repulsionStrength = 0.1; // strength
@@ -136,6 +137,15 @@ const Container = ({
   return (
     <div
       ref={containerRef}
+      onClick={() => {
+        if (state.objectShape === "box") {
+          setState({ ...state, objectShape: "orb" });
+        } else if (state.objectShape === "orb") {
+          setState({ ...state, objectShape: "cross" });
+        } else if (state.objectShape === "cross") {
+          setState({ ...state, objectShape: "box" });
+        }
+      }}
       className="relative border border-1 border-black"
       style={{ width: width, height: height, overflow: "hidden" }}
       onMouseMove={(event) => {

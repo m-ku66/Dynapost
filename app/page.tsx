@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AppContextProvider } from "./context/AppContext";
 import Separator from "./components/Separator";
 import Container from "./components/animation_components/Container";
+import InteractionCard from "./components/InteractionCard";
 
 export default function Home() {
   const h1Ref = useRef<HTMLHeadingElement>(null);
@@ -70,7 +71,30 @@ export default function Home() {
           </div>
           <div className="flex flex-col w-full h-fit">
             <Separator height={0.05} />
-            <div className="flex justify-between w-full h-16 bg-stone-300"></div>
+            <div className="flex justify-between w-full h-16 bg-transparent">
+              <InteractionCard
+                cards={[
+                  {
+                    id: "float",
+                    title: "001",
+                    description:
+                      "Something about floating. Something about floating.",
+                  },
+                  {
+                    id: "bounce",
+                    title: "002",
+                    description:
+                      "Something about gravity. Something about gravity.",
+                  },
+                  {
+                    id: "cycle",
+                    title: "003",
+                    description:
+                      "Something about cycles. Something about cycles.",
+                  },
+                ]}
+              />
+            </div>
             <Separator height={0.05} />
           </div>
           <div
