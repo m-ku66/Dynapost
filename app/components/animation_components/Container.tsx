@@ -51,39 +51,63 @@ const Container = ({
 
   // Main animation loop with unified physics calculations
   const animate = useCallback(() => {
+    const centerX = width / 2; // Set to true center
+    const centerY = height / 2;
+    const cycleSpeed = 0.01; // Increase for tighter orbit
+
     setObjectArray((prevObjects) => {
       return prevObjects.map((obj) => {
         let { x, y, vx, vy, radius } = obj;
 
-        // Mouse repulsion
+        // Mouse repulsion logic
         if (isMouseInContainer.current) {
           const dx = x - mousePos.x;
           const dy = y - mousePos.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < repulsionRadius && distance > 0) {
+            if (distance < repulsionRadius && distance > 0) {
+              if (physicsState === "bounce") {
+                const force = repulsionStrength * (repulsionRadius - distance);
+
+                // Apply stronger force upward for 'bounce' state
+                vx += (dx * force) / 10000; // Minor horizontal influence
+                vy -= Math.abs(dy * force) / 100; // Stronger upward force
+              }
+            }
+
             const force =
               (repulsionStrength * (repulsionRadius - distance)) / distance;
             vx += (dx * force) / 15;
             vy += (dy * force) / 15;
-
-            if (physicsState === "bounce") {
-              vy -= force * 1.5; // Extra upward force in bounce mode
-            }
           }
         }
 
-        // Apply state-specific physics
-        switch (physicsState) {
-          case "bounce":
-            vy += gravity;
-            break;
-          case "float":
-          case "cycle":
-            // Optional: Add subtle ambient motion
-            vx += (Math.random() - 0.5) * 0.1;
-            vy += (Math.random() - 0.5) * 0.1;
-            break;
+        // Apply orbital movement only after mouse influence
+        if (physicsState === "cycle") {
+          const angle = Math.atan2(y - centerY, x - centerX);
+          vx += -Math.sin(angle) * cycleSpeed * (width / 100);
+          vy += Math.cos(angle) * cycleSpeed * (height / 100);
+
+          // Limit the orbit radius to prevent boundary collisions
+          const maxOrbitRadius = Math.min(width, height) / 2 - radius * 2;
+          const distFromCenter = Math.sqrt(
+            (x - centerX) ** 2 + (y - centerY) ** 2
+          );
+
+          if (distFromCenter > maxOrbitRadius) {
+            // Pull the object back toward the center
+            vx -= ((x - centerX) / distFromCenter) * 0.05;
+            vy -= ((y - centerY) / distFromCenter) * 0.05;
+          }
+        }
+
+        // Apply additional physics for bounce and float states
+        if (physicsState === "bounce") {
+          vy += gravity;
+        } else if (physicsState === "float") {
+          vx += (Math.random() - 0.5) * 0.1;
+          vy += (Math.random() - 0.5) * 0.1;
         }
 
         // Update position
@@ -106,7 +130,6 @@ const Container = ({
           y = height - radius;
           vy *= -0.8;
 
-          // Special handling for bounce mode
           if (physicsState === "bounce" && Math.abs(vy) < 0.5) {
             vy = 0;
           }

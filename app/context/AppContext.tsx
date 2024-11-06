@@ -24,7 +24,7 @@ interface AppContextProviderProps {
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const [appstate, setAppState] = useState<appStateObject>({
     physicsState: "float",
-    objectShape: "cross",
+    objectShape: "orb",
   });
 
   return (
