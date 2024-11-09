@@ -193,7 +193,7 @@ export default function Home() {
           </div>
           <div
             ref={parentRef}
-            className="fade-in2 flex justify-center items-center w-full h-[80%] border border-1 border-black/[0.2]"
+            className="fade-in2 flex justify-center items-center w-full h-full border border-1 border-black/[0.2]"
           >
             <Container
               width={containerDimensions.width}
