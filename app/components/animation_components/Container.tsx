@@ -33,7 +33,7 @@ const Container = ({
   const { physicsState } = useAppContext().state;
   const { state, setState } = useAppContext();
   const gravity = 0.5;
-  const repulsionRadius = 100; // radius
+  const repulsionRadius = 50; // radius
   const repulsionStrength = 0.1; // strength
 
   // Initialize objects
