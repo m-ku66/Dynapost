@@ -39,9 +39,10 @@ export default function Home() {
     // Calculate container dimensions
     const adjustContainerDimensions = () => {
       if (parentRef.current) {
+        const rect = parentRef.current.getBoundingClientRect();
         setContainerDimensions({
-          width: parentRef.current.clientWidth,
-          height: parentRef.current.clientHeight,
+          width: rect.width,
+          height: rect.height,
         });
       }
     };
@@ -54,18 +55,23 @@ export default function Home() {
 
     window.addEventListener("keydown", handleKeyPress);
 
-    // Initial calculations
-    adjustLetterSpacing();
-    adjustContainerDimensions();
-
-    // Adjust on window resize
-    window.addEventListener("resize", () => {
+    // Initial calculations with a small delay
+    const timeoutId = setTimeout(() => {
       adjustLetterSpacing();
       adjustContainerDimensions();
-    });
+    }, 100);
+
+    // Adjust on window resize
+    const handleResize = () => {
+      adjustLetterSpacing();
+      adjustContainerDimensions();
+    };
+
+    window.addEventListener("resize", handleResize);
+
     return () => {
-      window.removeEventListener("resize", adjustLetterSpacing);
-      window.removeEventListener("resize", adjustContainerDimensions);
+      clearTimeout(timeoutId);
+      window.removeEventListener("resize", handleResize);
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
@@ -195,12 +201,15 @@ export default function Home() {
             ref={parentRef}
             className="fade-in2 flex justify-center items-center w-full h-full border border-1 border-black/[0.2]"
           >
-            <Container
-              width={containerDimensions.width}
-              height={containerDimensions.height}
-              objectCount={objectCount}
-              maxSize={maxSize.value}
-            />
+            {containerDimensions.width > 0 &&
+              containerDimensions.height > 0 && (
+                <Container
+                  width={containerDimensions.width}
+                  height={containerDimensions.height}
+                  objectCount={objectCount}
+                  maxSize={maxSize.value}
+                />
+              )}
           </div>
           <div className="fade-in3 flex justify-between mt-2 items-center">
             <Image
