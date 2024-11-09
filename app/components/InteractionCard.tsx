@@ -19,7 +19,7 @@ const InfoCards = ({ cards }: InfoCardsProps) => {
     "text-black select-none cursor-pointer flex flex-col gap-1 w-[32%] bg-transparent";
   return (
     <>
-      {cards.map((card) => (
+      {cards.map((card, index) => (
         <div
           key={card.id}
           className={
@@ -37,8 +37,12 @@ const InfoCards = ({ cards }: InfoCardsProps) => {
             }
           }}
         >
-          <h1 className="text-[0.8rem] font-bold">{card.title}</h1>
-          <p className="text-[0.6rem]">{card.description}</p>
+          <h1 className={`slide-up${index + 1} text-[0.8rem] font-bold`}>
+            {card.title}
+          </h1>
+          <p className={`slide-up${index + 1} text-[0.6rem]`}>
+            {card.description}
+          </p>
         </div>
       ))}
     </>

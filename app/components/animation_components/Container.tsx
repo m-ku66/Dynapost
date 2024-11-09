@@ -53,11 +53,12 @@ const Container = ({
   const animate = useCallback(() => {
     const centerX = width / 2; // Set to true center
     const centerY = height / 2;
-    const cycleSpeed = 0.01; // Increase for tighter orbit
+    const cycleSpeed = 0.03; // Increase for tighter orbit
 
     setObjectArray((prevObjects) => {
       return prevObjects.map((obj) => {
-        let { x, y, vx, vy, radius } = obj;
+        let { x, y, vx, vy } = obj;
+        const { radius } = obj;
 
         // Mouse repulsion logic
         if (isMouseInContainer.current) {
