@@ -11,6 +11,7 @@ type physicsObjectProps = {
 };
 
 const Object = React.memo(({ x, y, radius, color }: physicsObjectProps) => {
+  Object.displayName = "Object";
   const objectShape = useAppContext().state.objectShape;
 
   function renderObject() {

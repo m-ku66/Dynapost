@@ -258,7 +258,7 @@ export default function Home() {
             </a>
           </div>
           <p className="hidden md:block text-[0.7rem]">
-            press 's' to {isPlaying ? "mute" : "unmute"} sound
+            {"press 's' to " + isPlaying ? "mute" : "unmute" + "sound"}
           </p>
         </div>
 
