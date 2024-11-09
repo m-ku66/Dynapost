@@ -281,8 +281,9 @@ export default function Home() {
       </div>
       <div className="md:hidden container max-w-full h-screen flex justify-center items-center">
         <p className="w-[80%]">
-          Erm...Sorry, but this experience is best viewed on a larger screens. I
-          also didn't plan on making it mobile friendly...my bad :p
+          {
+            "Erm...Sorry, but this experience is best viewed on a larger screens. I also didn't plan on making it mobile friendly...my bad :p"
+          }
         </p>
       </div>
     </AppContextProvider>
