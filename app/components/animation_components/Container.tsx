@@ -33,7 +33,7 @@ const Container = ({
   const { physicsState } = useAppContext().state;
   const { state, setState } = useAppContext();
   const gravity = 0.5;
-  const repulsionRadius = 50; // radius
+  let repulsionRadius: number; // radius
   const repulsionStrength = 0.1; // strength
 
   // Initialize objects
@@ -54,6 +54,7 @@ const Container = ({
     const centerX = width / 2; // Set to true center
     const centerY = height / 2;
     const cycleSpeed = 0.03; // Increase for tighter orbit
+    repulsionRadius = 100;
 
     setObjectArray((prevObjects) => {
       return prevObjects.map((obj) => {
@@ -69,6 +70,7 @@ const Container = ({
           if (distance < repulsionRadius && distance > 0) {
             if (distance < repulsionRadius && distance > 0) {
               if (physicsState === "bounce") {
+                repulsionRadius = 80;
                 const force = repulsionStrength * (repulsionRadius - distance);
 
                 // Apply stronger force upward for 'bounce' state
