@@ -152,7 +152,7 @@ export default function Home() {
 
   return (
     <AppContextProvider>
-      <div className="hidden fade-in1 container max-w-full h-screen md:flex justify-center items-center p-8">
+      <div className="hidden fade-in1 container max-w-full h-screen md:flex justify-center items-center p-8 bg-white text-black">
         <div className="slide-up w-full md:w-[500px] h-full border border-1 border-black flex flex-col px-8 pt-4 pb-4">
           <div className="flex flex-col select-none">
             <h1
